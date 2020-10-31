@@ -11,6 +11,8 @@
 
     <modules>
         <module>netty-demo</module>
+        <module>socket-server-demo</module>
+        <module>socket-client-demo</module>
     </modules>
 
 </project>

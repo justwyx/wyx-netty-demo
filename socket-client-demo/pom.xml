@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.wyx</groupId>
-    <artifactId>netty-demo</artifactId>
+    <artifactId>socket-client-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>netty-demo</name>
+    <name>socket-client-demo</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
