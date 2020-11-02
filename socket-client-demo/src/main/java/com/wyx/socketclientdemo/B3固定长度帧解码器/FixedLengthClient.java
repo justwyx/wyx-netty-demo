@@ -1,4 +1,4 @@
-package com.wyx.socketclientdemo.line;
+package com.wyx.socketclientdemo.B3固定长度帧解码器;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -11,11 +11,11 @@ import io.netty.handler.codec.string.StringEncoder;
 
 /**
  * @Description :
- * 基于行的帧解码器，即会按照行分隔符对数据进行拆包粘包，解码出 ByteBuf。
+ * 固定长度帧解码器，即会按照指定的长度对 Frame 中的数据进行拆粘包。
  * @author : Just wyx
  * @Date : 2020/10/31
  */
-public class LineClient {
+public class FixedLengthClient {
 	public static void main(String[] args) {
 		NioEventLoopGroup group = new NioEventLoopGroup();
 
@@ -28,7 +28,7 @@ public class LineClient {
 						ChannelPipeline pipeline = ch.pipeline();
 						// 客户端只需要发送数据 只需要编码就行了
 						pipeline.addLast(new StringEncoder());
-						pipeline.addLast(new LineClientHandler());
+						pipeline.addLast(new FixedLengthClientHandler());
 					}
 				});
 		try {

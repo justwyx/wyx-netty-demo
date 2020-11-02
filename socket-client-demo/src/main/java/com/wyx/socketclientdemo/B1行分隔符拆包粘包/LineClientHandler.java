@@ -1,4 +1,4 @@
-package com.wyx.socketclientdemo.line;
+package com.wyx.socketclientdemo.B1行分隔符拆包粘包;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

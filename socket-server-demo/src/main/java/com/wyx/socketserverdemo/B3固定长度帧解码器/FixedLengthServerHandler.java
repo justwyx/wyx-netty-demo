@@ -1,4 +1,4 @@
-package com.wyx.socketserverdemo.line;
+package com.wyx.socketserverdemo.B3固定长度帧解码器;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -8,7 +8,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
  * @author : Just wyx
  * @Date : 2020/10/31
  */
-public class LineServerHandler extends SimpleChannelInboundHandler<String> {
+public class FixedLengthServerHandler extends SimpleChannelInboundHandler<String> {
 	private int count = 0;
 
 

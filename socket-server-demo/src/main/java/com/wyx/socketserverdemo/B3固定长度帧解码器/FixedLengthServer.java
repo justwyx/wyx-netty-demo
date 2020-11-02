@@ -1,22 +1,24 @@
-package com.wyx.socketserverdemo.line;
+package com.wyx.socketserverdemo.B3固定长度帧解码器;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 
 /**
  * @Description :
- * 基于行的帧解码器，即会按照行分隔符对数据进行拆包粘包，解码出 ByteBuf。
+ * 服务端作为接收方，直接将接收到的 Frame 解码为 String 后进行显示，不对这些 Frame 进行粘包与拆包。
  * @author : Just wyx
  * @Date : 2020/10/31
  */
-public class LineServer {
+public class FixedLengthServer {
 	public static void main(String[] args) {
 		NioEventLoopGroup parentGroup = new NioEventLoopGroup();
 		NioEventLoopGroup childGroup = new NioEventLoopGroup();
@@ -28,11 +30,11 @@ public class LineServer {
 					@Override
 					protected void initChannel(SocketChannel ch) throws Exception {
 						ChannelPipeline pipeline = ch.pipeline();
-						// 按换行接收
-						pipeline.addLast(new LineBasedFrameDecoder(5120)); // 5k
+						// 指定分隔符拆包粘包 DelimiterBasedFrameDecoder
+						pipeline.addLast(new FixedLengthFrameDecoder(20));
 						// 字符串解码器，只接收消息，不需要编码器
 						pipeline.addLast(new StringDecoder());
-						pipeline.addLast(new LineServerHandler());
+						pipeline.addLast(new FixedLengthServerHandler());
 					}
 				});
 
