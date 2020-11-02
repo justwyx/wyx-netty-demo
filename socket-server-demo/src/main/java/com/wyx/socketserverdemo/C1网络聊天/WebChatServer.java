@@ -1,26 +1,27 @@
-package com.wyx.socketserverdemo.B4基于长度域的帧解码器;
+package com.wyx.socketserverdemo.C1网络聊天;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.FixedLengthFrameDecoder;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 
 /**
  * @Description :
- * 服务端作为接收方，直接将接收到的 Frame 解码为 String 后进行显示，不对这些 Frame 进行粘包与拆包。
+ * 基于行的帧解码器，即会按照行分隔符对数据进行拆包粘包，解码出 ByteBuf。
  * @author : Just wyx
  * @Date : 2020/10/31
  */
-public class LengthFieldServer {
+public class WebChatServer {
 	public static void main(String[] args) {
-		NioEventLoopGroup parentGroup = new NioEventLoopGroup();
-		NioEventLoopGroup childGroup = new NioEventLoopGroup();
+		EventLoopGroup parentGroup = new NioEventLoopGroup();
+		EventLoopGroup childGroup = new NioEventLoopGroup();
 
 		ServerBootstrap bootstrap = new ServerBootstrap()
 				.group(parentGroup, childGroup)
@@ -29,18 +30,13 @@ public class LengthFieldServer {
 					@Override
 					protected void initChannel(SocketChannel ch) throws Exception {
 						ChannelPipeline pipeline = ch.pipeline();
-						/**
-						 * 构造参数：
-						 * maxFrameLength:要解码的 Frame 的最大长度
-						 * lengthFieldOffset:长度域的偏移量
-						 * lengthFieldLength:长度域的长度
-						 * lengthAdjustment:要添加到长度域值中的补偿值，长度矫正值。
-						 * initialBytesToStrip:从解码帧中要剥去的前面字节
-						 */
-//						pipeline.addLast(new LengthFieldBasedFrameDecoder(20));
-						// 字符串解码器，只接收消息，不需要编码器
+						// 按换行接收
+						pipeline.addLast(new LineBasedFrameDecoder(5120)); // 5k
+						// 字符串编码器，
+						pipeline.addLast(new StringEncoder());
+						// 字符串解码器，
 						pipeline.addLast(new StringDecoder());
-						pipeline.addLast(new LengthFieldServerHandler());
+						pipeline.addLast(new WebChatServerHandler());
 					}
 				});
 
