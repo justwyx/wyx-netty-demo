@@ -13,6 +13,7 @@
         <module>netty-demo</module>
         <module>socket-server-demo</module>
         <module>socket-client-demo</module>
+        <module>niosocket-demo</module>
     </modules>
 
 </project>
