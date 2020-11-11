@@ -21,7 +21,8 @@ public class NioClient {
 		// 连接server
 		if (!clientChannel.connect(serverAddr)) {
 			// 首次连接失败，进行重连
-			while (clientChannel.finishConnect()) {
+			while (!clientChannel.finishConnect()) {
+				System.out.println("nio没有连接上，正尝试重连");
 				continue;
 			}
 		}
