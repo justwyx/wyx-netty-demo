@@ -11,8 +11,8 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
 /**
- * @author : Just wyx
  * @Description : TODO 2020/10/31
+ * @author : Just wyx
  * @Date : 2020/10/31
  */
 public class SomeServer {
@@ -24,7 +24,7 @@ public class SomeServer {
 				.group(parentGroup, childGroup)
 				.channel(NioServerSocketChannel.class)
 				.childHandler(new ChannelInitializer<SocketChannel>() {
-					@Override
+					@Override 
 					protected void initChannel(SocketChannel ch) throws Exception {
 						ChannelPipeline pipeline = ch.pipeline();
 						// 字符串解码器

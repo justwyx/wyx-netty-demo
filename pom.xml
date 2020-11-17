@@ -14,6 +14,7 @@
         <module>socket-server-demo</module>
         <module>socket-client-demo</module>
         <module>niosocket-demo</module>
+        <module>bio-demo</module>
     </modules>
 
 </project>
